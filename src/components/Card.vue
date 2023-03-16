@@ -63,10 +63,14 @@
                 </ul>
             </div>
             <div class="card__control">
-                <button class="card__add-deals text button button--wide">
+                <button class="card__add-deals text button button--wide"
+                :class="{'button--active' : state.favButton}"
+                @click="addFavourite()">
                     Добавить в сделки
                 </button>
-                <button class="card__add-fav text button">
+                <button class="card__add-fav text button"
+                :class="{'button--active' : state.dealButton}"
+                @click="addDeals()">
                     <img
                         src="@/assets/img/cards/heart.svg"
                         alt=""
@@ -81,7 +85,23 @@
     <!-- /results__item -->
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// TODO прикурутить TS
+import { reactive } from "vue";
+const state = reactive({
+    favButton: false,
+    dealButton: false,
+});
+
+function addFavourite() :void {
+    state.favButton = !state.favButton;
+}
+
+function addDeals() :void {
+    state.dealButton = !state.dealButton;
+}
+
+</script>
 
 <style scoped>
 .card {
@@ -235,5 +255,10 @@
 .button--wide {
     width: unset;
     padding: 0 36px;
+}
+/* TODO сделать нормальный стиль для активных кнопок */
+.button--active {
+    color: white;
+    background: #2942a8;
 }
 </style>

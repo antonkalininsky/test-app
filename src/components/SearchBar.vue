@@ -2,14 +2,26 @@
     <div class="search text">
         <div class="search__filter">
             <button
-                class="search__option search__option--active text text--light"
+                class="search__option text text--light"
+                :class="{ 'search__option--active': state.searchFilters[0] }"
+                @click="setSearchFilter(0)"
             >
                 Все типы
             </button>
-            <button class="search__option text text--light">
+            <button
+                class="search__option text text--light"
+                :class="{ 'search__option--active': state.searchFilters[1] }"
+                @click="setSearchFilter(1)"
+            >
                 Прямые продажи
             </button>
-            <button class="search__option text text--light">Аукцион</button>
+            <button
+                class="search__option text text--light"
+                :class="{ 'search__option--active': state.searchFilters[2] }"
+                @click="setSearchFilter(2)"
+            >
+                Аукцион
+            </button>
         </div>
         <div class="search__box">
             <input type="search" name="" id="" class="search__input text" />
@@ -26,10 +38,23 @@
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// TODO прикурутить TS
+import { reactive } from "vue";
+const state = reactive({
+    searchFilters: [true, false, false],
+});
+
+function setSearchFilter(num: number): void {
+    state.searchFilters.forEach((x, ind, arr) => {
+        arr[ind] = false;
+    });
+    state.searchFilters[num] = true;
+    console.log(num);
+}
+</script>
 
 <style scoped>
-/* SEARCH */
 .search {
     display: flex;
     flex-direction: row;

@@ -2,7 +2,12 @@
     <header class="header text">
         <div class="header__box"></div>
         <nav class="header__nav nav">
-            <a href="#" class="nav__item" @click="setCardsGroup(1)">
+            <a
+                href="#"
+                class="nav__item"
+                :class="{ 'nav__item--active': state.navActive[0] }"
+                @click="setCardsGroup(0)"
+            >
                 <div class="nav__pic">
                     <img
                         src="@/assets/img/nav/heart.svg"
@@ -16,8 +21,9 @@
             <!-- /nav__item -->
             <a
                 href="#"
-                class="nav__item nav__item--active"
-                @click="setCardsGroup(2)"
+                class="nav__item"
+                :class="{ 'nav__item--active': state.navActive[1] }"
+                @click="setCardsGroup(1)"
             >
                 <div class="nav__pic">
                     <img
@@ -30,7 +36,12 @@
                 <div class="nav__text">Склад</div>
             </a>
             <!-- /nav__item -->
-            <a href="#" class="nav__item" @click="setCardsGroup(3)">
+            <a
+                href="#"
+                class="nav__item"
+                :class="{ 'nav__item--active': state.navActive[2] }"
+                @click="setCardsGroup(2)"
+            >
                 <div class="nav__pic">
                     <img
                         src="@/assets/img/nav/bag.svg"
@@ -49,13 +60,22 @@
 </template>
 
 <script setup lang="ts">
+// TODO прикурутить TS
+import { reactive } from "vue";
+const state = reactive({
+    navActive: [false, true, false],
+});
+
 function setCardsGroup(num: number): void {
+    state.navActive.forEach((x, ind, arr) => {
+        arr[ind] = false;
+    });
+    state.navActive[num] = true;
     console.log(num);
 }
 </script>
 
 <style scoped>
-/* HEADER */
 .header {
     position: relative;
     padding: 60px 0 77px 0;
