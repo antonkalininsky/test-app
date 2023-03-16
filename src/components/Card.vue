@@ -34,6 +34,7 @@
                     <div class="category__text">Стройматериалы</div>
                 </div>
                 <div class="card__description">
+                    {{ test }}
                     Пиломатериалы брус доска. Распродажа пиломатериалов в связи
                     закрытием ЛЕСО-БАЗЫ! Успейте приобрести пиломатериал со
                     скидками до закрытия 01.06.2022 ! Мы стараемся быть не
@@ -86,8 +87,13 @@
 </template>
 
 <script setup lang="ts">
+import { computed, reactive } from "vue";
+import { generalStore } from '@/store/store'
+const store = generalStore();
+const test = computed(() => store.getTest);
+
+
 // TODO прикурутить TS
-import { reactive } from "vue";
 const state = reactive({
     favButton: false,
     dealButton: false,

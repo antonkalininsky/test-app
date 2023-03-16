@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
-import { store } from './store/store.js'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 
 import './assets/global.css'
 
-createApp(App).mount('#app')
+createApp(App).use(createPinia()).mount('#app')
