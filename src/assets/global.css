@@ -1,0 +1,23 @@
+/* GLOBAL */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: unset;
+    color: unset;
+}
+
+.text {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    color: #2d3b87;
+    font-size: 13px;
+}
+
+.text--light {
+    color: #969dc3;
+}
