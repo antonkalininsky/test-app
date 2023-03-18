@@ -3,8 +3,9 @@ import { ref, computed } from 'vue';
 
 // TODO прикрутить типы
 export const generalStore = defineStore('store', () => {
-    const test = ref(69);
-    const getTest = computed(() => test);
+    // переменные
+    const mode = ref(0);
+    const filter = ref(0);
 
-    return {test, getTest};
+    return {mode, filter};
 })

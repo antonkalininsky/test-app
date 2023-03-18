@@ -2,16 +2,11 @@
     <div class="results__item card text">
         <div class="card__main">
             <div class="card__pic">
-                <img
-                    src="@/assets/img/products/product-1.png"
-                    alt=""
-                    srcset=""
-                    class="card__img"
-                />
+                <img :src="imgSrc" alt="" srcset="" class="card__img" />
             </div>
             <div class="card__text">
-                <div class="card__mode">Аукцион</div>
-                <div class="card__name">Пиломатериалы брус доска</div>
+                <div class="card__mode">{{ props.data.state }}</div>
+                <div class="card__name">{{ props.data.title }}</div>
                 <div class="card__location">
                     <div class="card__location-icon">
                         <img
@@ -22,56 +17,52 @@
                         />
                     </div>
                     <div class="card__location-text">
-                        Санкт-Петербург, Красное Село
+                        {{ props.data.location }}
                     </div>
                 </div>
                 <div class="card__seller">
                     <span class="card__seller-title"> Продавец </span>
-                    Торговый Дом ГОСТ
+                    {{ props.data.seller }}
                 </div>
                 <div class="card__category category">
                     <div class="category__head">Вид товара</div>
-                    <div class="category__text">Стройматериалы</div>
+                    <div class="category__text">{{ props.data.type }}</div>
                 </div>
                 <div class="card__description">
-                    {{ test }}
-                    Пиломатериалы брус доска. Распродажа пиломатериалов в связи
-                    закрытием ЛЕСО-БАЗЫ! Успейте приобрести пиломатериал со
-                    скидками до закрытия 01.06.2022 ! Мы стараемся быть не
-                    такими как все и даем вам: Доставка в согласованный день,
-                    если переносим - доставка бесплатно за наш счет. Весь
-                    материал соответствует гостам. Вы можете проверить
-                    пиломатериалы на складе или на адресе. Если материал не
-                    соответствует заявленному качеству - бесплатно меняем его.
+                    {{ props.data.description }}
                 </div>
             </div>
         </div>
         <!-- /card__main -->
         <div class="card__offer">
             <div class="card__info">
-                <div class="card__price-total">33 000 ₽</div>
+                <div class="card__price-total">{{ calcPriceTotal }} ₽</div>
                 <ul class="card__list list">
                     <li class="list__item">
                         <div class="list__text text--light">Количество</div>
-                        <div class="list__amount">3 шт.</div>
+                        <div class="list__amount">{{ props.data.amount }} шт.</div>
                     </li>
                     <li class="list__item">
                         <div class="list__text text--light">
                             Стоимость за штуку
                         </div>
-                        <div class="list__amount">11 000 ₽</div>
+                        <div class="list__amount">{{ props.data.price }} ₽</div>
                     </li>
                 </ul>
             </div>
             <div class="card__control">
-                <button class="card__add-deals text button button--wide"
-                :class="{'button--active' : state.favButton}"
-                @click="addFavourite()">
+                <button
+                    class="card__add-deals text button button--wide"
+                    :class="{ 'button--active': state.favButton }"
+                    @click="addFavourite()"
+                >
                     Добавить в сделки
                 </button>
-                <button class="card__add-fav text button"
-                :class="{'button--active' : state.dealButton}"
-                @click="addDeals()">
+                <button
+                    class="card__add-fav text button"
+                    :class="{ 'button--active': state.dealButton }"
+                    @click="addDeals()"
+                >
                     <img
                         src="@/assets/img/cards/heart.svg"
                         alt=""
@@ -88,10 +79,29 @@
 
 <script setup lang="ts">
 import { computed, reactive } from "vue";
-import { generalStore } from '@/store/store'
+import { generalStore } from "@/store/store";
 const store = generalStore();
-const test = computed(() => store.getTest);
 
+const props = defineProps({
+    data: {
+        type: Object,
+        default: {
+            id: 0,
+            state: "Аукцион",
+            pic: "product-1.png",
+            title: "Заголовок",
+            location: "Локация",
+            seller: "Продавец",
+            type: "Стройматериалы",
+            description: "Описание",
+            amount: "99",
+            price: "1000",
+        },
+    },
+});
+
+const calcPriceTotal = computed(() => props.data.amount * props.data.price);
+const imgSrc = computed(() => "/src/assets/img/products/" + props.data.pic);
 
 // TODO прикурутить TS
 const state = reactive({
@@ -99,27 +109,30 @@ const state = reactive({
     dealButton: false,
 });
 
-function addFavourite() :void {
+// const trueCards = Array.from(cards);
+// console.log(cards[0]);
+// console.log(trueCards);
+
+function addFavourite(): void {
     state.favButton = !state.favButton;
 }
 
-function addDeals() :void {
+function addDeals(): void {
     state.dealButton = !state.dealButton;
 }
-
 </script>
 
 <style scoped>
 .card {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 314px;
     border-radius: 20px;
     border: 1px solid #e0e3ee;
 }
 
 .card__main {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 276px auto;
     padding-bottom: 50px;
     padding: 20px 20px 50px 20px;
 }
@@ -241,7 +254,8 @@ function addDeals() :void {
 }
 
 .card__control {
-    width: 100%;
+    width: fit-content;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: auto auto;
     column-gap: 10px;

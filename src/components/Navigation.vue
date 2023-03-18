@@ -2,8 +2,7 @@
     <header class="header text">
         <div class="header__box"></div>
         <nav class="header__nav nav">
-            <a
-                href="#"
+            <button
                 class="nav__item"
                 :class="{ 'nav__item--active': state.navActive[0] }"
                 @click="setCardsGroup(0)"
@@ -17,10 +16,9 @@
                     />
                 </div>
                 <div class="nav__text">Избранное</div>
-            </a>
+            </button>
             <!-- /nav__item -->
-            <a
-                href="#"
+            <button
                 class="nav__item"
                 :class="{ 'nav__item--active': state.navActive[1] }"
                 @click="setCardsGroup(1)"
@@ -34,10 +32,9 @@
                     />
                 </div>
                 <div class="nav__text">Склад</div>
-            </a>
+            </button>
             <!-- /nav__item -->
-            <a
-                href="#"
+            <button
                 class="nav__item"
                 :class="{ 'nav__item--active': state.navActive[2] }"
                 @click="setCardsGroup(2)"
@@ -51,7 +48,7 @@
                     />
                 </div>
                 <div class="nav__text">Сделки</div>
-            </a>
+            </button>
             <!-- /nav__item -->
         </nav>
         <!-- /header__nav -->
@@ -60,8 +57,11 @@
 </template>
 
 <script setup lang="ts">
-// TODO прикурутить TS
 import { reactive } from "vue";
+import { generalStore } from "@/store/store";
+const store = generalStore();
+// TODO прикурутить TS
+
 const state = reactive({
     navActive: [false, true, false],
 });
@@ -71,7 +71,7 @@ function setCardsGroup(num: number): void {
         arr[ind] = false;
     });
     state.navActive[num] = true;
-    console.log(num);
+    store.mode = num;
 }
 </script>
 
@@ -117,10 +117,6 @@ function setCardsGroup(num: number): void {
 
 .nav__item--active {
     background-color: #f4f5f9;
-}
-
-.nav__pic {
-    margin-bottom: 7px;
 }
 
 .nav__text {

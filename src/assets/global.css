@@ -9,6 +9,12 @@ a {
     color: unset;
 }
 
+button {
+    background-color: unset;
+    border: unset;
+    color: unset;
+}
+
 .text {
     font-family: "Rubik";
     font-style: normal;
