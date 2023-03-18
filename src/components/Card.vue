@@ -25,12 +25,11 @@ const props = defineProps({
     },
 });
 
-
 const calcPriceTotal = computed(() => props.data.amount * props.data.price);
 const imgSrc = computed(() => "/src/assets/img/products/" + props.data.pic);
 const favButton2 = computed(() => store.favItems.has(parseInt(props.data.id)));
 const payStatus = computed(() => {
-    if (!props.dealID) {
+    if (props.dealID === undefined) {
         return false
     }
     return store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied;
@@ -54,7 +53,7 @@ function addDeals(): void {
 }
 
 function payDeal(): void {
-    if (!props.dealID) {
+    if (props.dealID === undefined) {
         return
     }
     store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied = true;
