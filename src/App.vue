@@ -1,24 +1,66 @@
 <script setup lang="ts">
-import Navigation from "./components/Navigation.vue"
-import SearchBar from "./components/SearchBar.vue"
-import Card from "./components/Card.vue"
+import Navigation from "./components/Navigation.vue";
+import SearchBar from "./components/SearchBar.vue";
+import Card from "./components/Card.vue";
 import cards from "@/data/items.json";
-import { reactive, computed } from "vue";
+import { computed } from "vue";
 import { generalStore } from "@/store/store";
 const store = generalStore();
 
-const cardsIDs: string[] = ['1', '2'];
+interface Item {
+    id: string;
+    state: string;
+    pic: string;
+    title: string;
+    location: string;
+    seller: string;
+    type: string;
+    description: string;
+    amount: string;
+    price: string;
+}
 
-// const modeCards = computed(() => cards.filter((x) => cardsIDs.includes(x.id)));
+interface ItemPlus {
+    data: Item;
+    dealID?: number;
+}
+
+function getModeCards(): ItemPlus[] {
+    switch (store.mode) {
+        case 0:
+            return cards
+                .filter((x) => store.favItems.has(parseInt(x.id)))
+                .map((x) => {
+                    return {
+                        data: x,
+                    };
+                });
+        case 1:
+            return cards.map((x) => {
+                return {
+                    data: x,
+                };
+            });
+        case 2:
+            return store.dealItems.map((x) => {
+                return {
+                    data: cards.find((y) => parseInt(y.id) === x.itemID),
+                    dealID: x.dealID,
+                } as ItemPlus;
+            }) as ItemPlus[];
+        default:
+            return [];
+    }
+}
+
 const filteredCards = computed(() => {
     if (store.filter === 0) {
-        return cards;
+        return getModeCards();
     }
-    return cards.filter((x) => parseInt(x.state) === store.filter);
+    return getModeCards().filter(
+        (x) => parseInt(x.data.state) === store.filter
+    );
 });
-// const searchedCards = computed(() => cards.filter((x) => cardsIDs.includes(x.id)));
-// const shownCards = computed(() => searchedCards);
-
 </script>
 
 <template>
@@ -26,7 +68,15 @@ const filteredCards = computed(() => {
         <Navigation />
         <SearchBar />
         <div class="results">
-            <Card v-for="card in filteredCards" :data="card" class="results__item"/>
+            <Card
+                v-for="card in filteredCards"
+                :data="card.data"
+                :dealID="card.dealID"
+                class="results__item"
+            />
+            <div class="results__empty text" v-if="filteredCards.length === 0">
+                Ничего не найдено!
+            </div>
         </div>
     </div>
 </template>
@@ -39,5 +89,13 @@ const filteredCards = computed(() => {
 
 .results__item {
     margin-bottom: 40px;
+}
+
+.results__empty {
+    width: fit-content;
+    margin: 0 auto;
+
+    font-weight: bold;
+    font-size: 20px;
 }
 </style>

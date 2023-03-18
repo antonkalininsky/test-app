@@ -1,3 +1,66 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { stateNames } from "@/data/stateNames";
+import { generalStore } from "@/store/store";
+const store = generalStore();
+const props = defineProps({
+    data: {
+        type: Object,
+        default: {
+            id: "0",
+            state: "Аукцион",
+            pic: "product-1.png",
+            title: "Заголовок",
+            location: "Локация",
+            seller: "Продавец",
+            type: "Стройматериалы",
+            description: "Описание",
+            amount: "99",
+            price: "1000",
+        },
+    },
+    dealID: {
+        type: Number,
+        required: false,
+    },
+});
+
+
+const calcPriceTotal = computed(() => props.data.amount * props.data.price);
+const imgSrc = computed(() => "/src/assets/img/products/" + props.data.pic);
+const favButton2 = computed(() => store.favItems.has(parseInt(props.data.id)));
+const payStatus = computed(() => {
+    if (!props.dealID) {
+        return false
+    }
+    return store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied;
+});
+
+function addFavourite(): void {
+    if (favButton2.value) {
+        store.favItems.delete(parseInt(props.data.id));
+    } else {
+        store.favItems.add(parseInt(props.data.id));
+    }
+}
+
+function addDeals(): void {
+    store.dealItems.push({
+        dealID: store.dealCount,
+        itemID: parseInt(props.data.id),
+        isPaied: false,
+    });
+    store.dealIncrement();
+}
+
+function payDeal(): void {
+    if (!props.dealID) {
+        return
+    }
+    store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied = true;
+}
+</script>
+
 <template>
     <div class="card text">
         <div class="card__main">
@@ -5,7 +68,9 @@
                 <img :src="imgSrc" alt="" srcset="" class="card__img" />
             </div>
             <div class="card__text">
-                <div class="card__mode">{{ stateNames.get(parseInt(props.data.state)) }}</div>
+                <div class="card__mode">
+                    {{ stateNames.get(parseInt(props.data.state)) }}
+                </div>
                 <div class="card__name">{{ props.data.title }}</div>
                 <div class="card__location">
                     <div class="card__location-icon">
@@ -40,7 +105,9 @@
                 <ul class="card__list list">
                     <li class="list__item">
                         <div class="list__text text--light">Количество</div>
-                        <div class="list__amount">{{ props.data.amount }} шт.</div>
+                        <div class="list__amount">
+                            {{ props.data.amount }} шт.
+                        </div>
                     </li>
                     <li class="list__item">
                         <div class="list__text text--light">
@@ -52,22 +119,39 @@
             </div>
             <div class="card__control">
                 <button
-                    class="card__add-deals text button button--wide"
-                    :class="{ 'button--active': state.favButton }"
-                    @click="addFavourite()"
+                    class="card__add-deals text button button--wide button--click"
+                    @click="addDeals()"
+                    v-if="store.mode !== 2"
                 >
                     Добавить в сделки
                 </button>
                 <button
+                    class="card__add-deals text button button--wide button--green"
+                    :class="{ 'button--gray': payStatus }"
+                    @click="payDeal()"
+                    v-if="store.mode === 2"
+                >
+                    <span v-if="payStatus">Оплачено</span>
+                    <span v-else>Оплатить</span>
+                </button>
+                <button
                     class="card__add-fav text button"
-                    :class="{ 'button--active': state.dealButton }"
-                    @click="addDeals()"
+                    :class="{ 'button--active': favButton2 }"
+                    @click="addFavourite()"
                 >
                     <img
-                        src="@/assets/img/cards/heart.svg"
+                        src="@/assets/img/cards/heart-w.svg"
                         alt=""
                         srcset=""
                         class="button__img"
+                        v-if="favButton2"
+                    />
+                    <img
+                        src="@/assets/img/cards/heart-b.svg"
+                        alt=""
+                        srcset=""
+                        class="button__img"
+                        v-else
                     />
                 </button>
             </div>
@@ -75,52 +159,6 @@
         <!-- /card__offer -->
     </div>
 </template>
-
-<script setup lang="ts">
-import { computed, reactive } from "vue";
-import { generalStore } from "@/store/store";
-import { stateNames } from "@/data/stateNames";
-const store = generalStore();
-
-const props = defineProps({
-    data: {
-        type: Object,
-        default: {
-            id: 0,
-            state: "Аукцион",
-            pic: "product-1.png",
-            title: "Заголовок",
-            location: "Локация",
-            seller: "Продавец",
-            type: "Стройматериалы",
-            description: "Описание",
-            amount: "99",
-            price: "1000",
-        },
-    },
-});
-
-const calcPriceTotal = computed(() => props.data.amount * props.data.price);
-const imgSrc = computed(() => "/src/assets/img/products/" + props.data.pic);
-
-// TODO прикурутить TS
-const state = reactive({
-    favButton: false,
-    dealButton: false,
-});
-
-// const trueCards = Array.from(cards);
-// console.log(cards[0]);
-// console.log(trueCards);
-
-function addFavourite(): void {
-    state.favButton = !state.favButton;
-}
-
-function addDeals(): void {
-    state.dealButton = !state.dealButton;
-}
-</script>
 
 <style scoped>
 .card {
@@ -254,16 +292,15 @@ function addDeals(): void {
 }
 
 .card__control {
-    width: fit-content;
+    width: 100%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: auto auto;
-    column-gap: 10px;
+    grid-template-columns: auto 50px;
+    column-gap: 12px;
 }
 
 .button {
     height: 50px;
-    width: 50px;
 
     background: #f4f5f9;
     border: unset;
@@ -273,11 +310,27 @@ function addDeals(): void {
 }
 
 .button--wide {
-    width: unset;
     padding: 0 36px;
 }
+
+.button--green {
+    color: #ffffff;
+    background: #69c57f;
+}
+
+.button--gray {
+    background-color: unset;
+    border: 1px solid #e0e3ee;
+    color: #969dc3;
+}
+
 /* TODO сделать нормальный стиль для активных кнопок */
 .button--active {
+    color: white;
+    background: #2942a8;
+}
+
+.button--click:active {
     color: white;
     background: #2942a8;
 }

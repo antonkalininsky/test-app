@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import { reactive } from "vue";
+import { generalStore } from "@/store/store";
+const store = generalStore();
+// TODO прикурутить TS
+
+store.mode = 1;
+const state = reactive({
+    navActive: [false, true, false],
+});
+
+function setCardsGroup(num: number): void {
+    state.navActive.forEach((x, ind, arr) => {
+        arr[ind] = false;
+    });
+    state.navActive[num] = true;
+    store.mode = num;
+}
+</script>
+
 <template>
     <header class="header text">
         <div class="header__box"></div>
@@ -55,25 +75,6 @@
     </header>
     <!-- /header -->
 </template>
-
-<script setup lang="ts">
-import { reactive } from "vue";
-import { generalStore } from "@/store/store";
-const store = generalStore();
-// TODO прикурутить TS
-
-const state = reactive({
-    navActive: [false, true, false],
-});
-
-function setCardsGroup(num: number): void {
-    state.navActive.forEach((x, ind, arr) => {
-        arr[ind] = false;
-    });
-    state.navActive[num] = true;
-    store.mode = num;
-}
-</script>
 
 <style scoped>
 .header {

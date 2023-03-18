@@ -1,11 +1,23 @@
 import { defineStore } from "pinia";
 import { ref, computed } from 'vue';
 
-// TODO прикрутить типы
+interface Deal {
+    dealID: number,
+    itemID: number,
+    isPaied: boolean
+}
+
 export const generalStore = defineStore('store', () => {
     // переменные
-    const mode = ref(0);
-    const filter = ref(0);
+    const mode = ref<number>(0);
+    const filter = ref<number>(0);
+    const favItems = ref<Set<number>>(new Set());
+    const dealItems = ref<Array<Deal>>(new Array<Deal>());
+    const dealCount = ref<number>(0);
 
-    return {mode, filter};
+    function dealIncrement(): void {
+        dealCount.value++;
+    }
+
+    return {mode, filter, favItems, dealItems, dealCount, dealIncrement};
 })
