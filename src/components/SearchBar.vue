@@ -41,6 +41,8 @@
 <script setup lang="ts">
 // TODO прикурутить TS
 import { reactive } from "vue";
+import { generalStore } from "@/store/store";
+const store = generalStore();
 const state = reactive({
     searchFilters: [true, false, false],
 });
@@ -50,7 +52,7 @@ function setSearchFilter(num: number): void {
         arr[ind] = false;
     });
     state.searchFilters[num] = true;
-    console.log(num);
+    store.filter = num;
 }
 </script>
 

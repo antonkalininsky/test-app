@@ -1,11 +1,11 @@
 <template>
-    <div class="results__item card text">
+    <div class="card text">
         <div class="card__main">
             <div class="card__pic">
                 <img :src="imgSrc" alt="" srcset="" class="card__img" />
             </div>
             <div class="card__text">
-                <div class="card__mode">{{ props.data.state }}</div>
+                <div class="card__mode">{{ stateNames.get(parseInt(props.data.state)) }}</div>
                 <div class="card__name">{{ props.data.title }}</div>
                 <div class="card__location">
                     <div class="card__location-icon">
@@ -74,12 +74,12 @@
         </div>
         <!-- /card__offer -->
     </div>
-    <!-- /results__item -->
 </template>
 
 <script setup lang="ts">
 import { computed, reactive } from "vue";
 import { generalStore } from "@/store/store";
+import { stateNames } from "@/data/stateNames";
 const store = generalStore();
 
 const props = defineProps({
