@@ -3,6 +3,8 @@ import { computed } from "vue";
 import { stateNames } from "@/data/stateNames";
 import { generalStore } from "@/store/store";
 const store = generalStore();
+
+// PROPS
 const props = defineProps({
     data: {
         type: Object,
@@ -25,17 +27,11 @@ const props = defineProps({
     },
 });
 
-function priceSpacer(str: string): string {
-    if (str.length <= 3) {
-        return str;
-    }
-    return priceSpacer(str.slice(0, -3)) + " " + str.slice(-3);
-}
-
+// COMPUTED
 const calcPriceTotal = computed(() => {
     return priceSpacer(String(props.data.amount * props.data.price));
 });
-const imgSrc = computed(() => "./src/assets/img/products/" + props.data.pic);
+const imgSrc = computed(() => "/images/products/" + props.data.pic);
 const favButton2 = computed(() => store.favItems.has(parseInt(props.data.id)));
 const payStatus = computed(() => {
     if (props.dealID === undefined) {
@@ -43,6 +39,14 @@ const payStatus = computed(() => {
     }
     return store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied;
 });
+
+// METHODS
+function priceSpacer(str: string): string {
+    if (str.length <= 3) {
+        return str;
+    }
+    return priceSpacer(str.slice(0, -3)) + " " + str.slice(-3);
+}
 
 function addFavourite(): void {
     if (favButton2.value) {
@@ -343,7 +347,6 @@ function payDeal(): void {
     color: #969dc3;
 }
 
-/* TODO сделать нормальный стиль для активных кнопок */
 .button--active {
     color: white;
     background: #2942a8;

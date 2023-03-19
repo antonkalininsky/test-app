@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import { reactive } from "vue";
 import { generalStore } from "@/store/store";
 const store = generalStore();
-// TODO прикурутить TS
 
+// SETUP
 store.mode = 1;
-const state = reactive({
-    navActive: [false, true, false],
-});
 
+// METHODS
 function setCardsGroup(num: number): void {
-    state.navActive.forEach((x, ind, arr) => {
-        arr[ind] = false;
-    });
-    state.navActive[num] = true;
     store.mode = num;
     store.updateLocalStorage();
 }
@@ -25,7 +18,7 @@ function setCardsGroup(num: number): void {
         <nav class="header__nav nav">
             <button
                 class="nav__item"
-                :class="{ 'nav__item--active': state.navActive[0] }"
+                :class="{ 'nav__item--active': store.mode === 0 }"
                 @click="setCardsGroup(0)"
             >
                 <div class="nav__pic">
@@ -41,7 +34,7 @@ function setCardsGroup(num: number): void {
             <!-- /nav__item -->
             <button
                 class="nav__item"
-                :class="{ 'nav__item--active': state.navActive[1] }"
+                :class="{ 'nav__item--active': store.mode === 1 }"
                 @click="setCardsGroup(1)"
             >
                 <div class="nav__pic">
@@ -57,7 +50,7 @@ function setCardsGroup(num: number): void {
             <!-- /nav__item -->
             <button
                 class="nav__item"
-                :class="{ 'nav__item--active': state.navActive[2] }"
+                :class="{ 'nav__item--active': store.mode === 2 }"
                 @click="setCardsGroup(2)"
             >
                 <div class="nav__pic">

@@ -21,7 +21,7 @@
         "type": "Стройматериалы",
         "description": "Proin dui felis, imperdiet et dui in, tincidunt luctus ligula. Proin mollis justo ullamcorper felis viverra, eget pulvinar sapien feugiat. Vivamus id nibh vitae purus pharetra viverra sit amet quis ligula. Nulla vestibulum velit tortor, eget volutpat odio porta ut. Integer porttitor auctor justo, sed vulputate ex. Aenean vestibulum magna sapien, ut sagittis lectus bibendum ac. Sed sollicitudin mi et tincidunt facilisis. Suspendisse mauris libero.",
         "amount": "3",
-        "price": "11000"
+        "price": "10000"
     },
     {
         "id": "2",
@@ -32,8 +32,8 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Curabitur blandit lacus non erat finibus pharetra. Proin felis elit, lobortis sit amet dolor vel, congue bibendum est. Vivamus eu metus ut neque pellentesque laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean nisl enim, lobortis ut nisi non, varius vehicula nisl. Maecenas pellentesque varius nisl, et consequat lorem placerat vel. Morbi commodo purus non erat posuere commodo. Vestibulum lacinia eget arcu sed porttitor. Mauris leo turpis, rutrum vel diam vitae, laoreet mattis dui. Integer venenatis justo at mi maximus, eu gravida sem pellentesque. Interdum et eleifend.",
-        "amount": "3",
-        "price": "11000"
+        "amount": "100",
+        "price": "200"
     },
     {
         "id": "3",
@@ -45,7 +45,7 @@
         "type": "Стройматериалы",
         "description": "Proin dui felis, imperdiet et dui in, tincidunt luctus ligula. Proin mollis justo ullamcorper felis viverra, eget pulvinar sapien feugiat. Vivamus id nibh vitae purus pharetra viverra sit amet quis ligula. Nulla vestibulum velit tortor, eget volutpat odio porta ut. Integer porttitor auctor justo, sed vulputate ex. Aenean vestibulum magna sapien, ut sagittis lectus bibendum ac. Sed sollicitudin mi et tincidunt facilisis. Suspendisse mauris libero.",
         "amount": "3",
-        "price": "11000"
+        "price": "9900"
     },
     {
         "id": "4",
@@ -56,7 +56,7 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Curabitur blandit lacus non erat finibus pharetra. Proin felis elit, lobortis sit amet dolor vel, congue bibendum est. Vivamus eu metus ut neque pellentesque laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean nisl enim, lobortis ut nisi non, varius vehicula nisl. Maecenas pellentesque varius nisl, et consequat lorem placerat vel. Morbi commodo purus non erat posuere commodo. Vestibulum lacinia eget arcu sed porttitor. Mauris leo turpis, rutrum vel diam vitae, laoreet mattis dui. Integer venenatis justo at mi maximus, eu gravida sem pellentesque. Interdum et eleifend.",
-        "amount": "3",
+        "amount": "13",
         "price": "11000"
     },
     {
@@ -68,8 +68,8 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Curabitur in hendrerit lectus, non tempus magna. Nunc magna justo, sagittis aliquet leo vitae, molestie sollicitudin massa. Proin molestie condimentum nibh, tincidunt lobortis nulla rhoncus quis. Etiam laoreet, augue at auctor commodo, lorem massa condimentum nisi, id feugiat ipsum felis vitae nunc.",
-        "amount": "3",
-        "price": "11000"
+        "amount": "5",
+        "price": "1000"
     },
     {
         "id": "6",
@@ -80,7 +80,7 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Curabitur blandit lacus non erat finibus pharetra. Proin felis elit, lobortis sit amet dolor vel, congue bibendum est. Vivamus eu metus ut neque pellentesque laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean nisl enim, lobortis ut nisi non, varius vehicula nisl. Maecenas pellentesque varius nisl, et consequat lorem placerat vel. Morbi commodo purus non erat posuere commodo. Vestibulum lacinia eget arcu sed porttitor. Mauris leo turpis, rutrum vel diam vitae, laoreet mattis dui. Integer venenatis justo at mi maximus, eu gravida sem pellentesque. Interdum et eleifend.",
-        "amount": "3",
+        "amount": "6",
         "price": "11000"
     },
     {
@@ -92,7 +92,7 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Proin dui felis, imperdiet et dui in, tincidunt luctus ligula. Proin mollis justo ullamcorper felis viverra, eget pulvinar sapien feugiat. Vivamus id nibh vitae purus pharetra viverra sit amet quis ligula. Nulla vestibulum velit tortor, eget volutpat odio porta ut. Integer porttitor auctor justo, sed vulputate ex. Aenean vestibulum magna sapien, ut sagittis lectus bibendum ac. Sed sollicitudin mi et tincidunt facilisis. Suspendisse mauris libero.",
-        "amount": "3",
+        "amount": "7",
         "price": "11000"
     },
     {
@@ -104,7 +104,7 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Curabitur in hendrerit lectus, non tempus magna. Nunc magna justo, sagittis aliquet leo vitae, molestie sollicitudin massa. Proin molestie condimentum nibh, tincidunt lobortis nulla rhoncus quis. Etiam laoreet, augue at auctor commodo, lorem massa condimentum nisi, id feugiat ipsum felis vitae nunc.",
-        "amount": "3",
+        "amount": "8",
         "price": "11000"
     },
     {
@@ -116,7 +116,7 @@
         "seller": "Торговый Дом ГОСТ",
         "type": "Стройматериалы",
         "description": "Curabitur blandit lacus non erat finibus pharetra. Proin felis elit, lobortis sit amet dolor vel, congue bibendum est. Vivamus eu metus ut neque pellentesque laoreet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean nisl enim, lobortis ut nisi non, varius vehicula nisl. Maecenas pellentesque varius nisl, et consequat lorem placerat vel. Morbi commodo purus non erat posuere commodo. Vestibulum lacinia eget arcu sed porttitor. Mauris leo turpis, rutrum vel diam vitae, laoreet mattis dui. Integer venenatis justo at mi maximus, eu gravida sem pellentesque. Interdum et eleifend.",
-        "amount": "3",
+        "amount": "9",
         "price": "11000"
     }
 ]

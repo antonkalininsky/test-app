@@ -4,31 +4,14 @@ import SearchBar from "./components/SearchBar.vue";
 import Card from "./components/Card.vue";
 import { reactive, computed } from "vue";
 import { generalStore } from "@/store/store";
+import type { Item, ItemPlus } from "./common/types";
 const store = generalStore();
+
+// SETUP
 store.readLocalStorage();
-
-interface Item {
-    id: string;
-    state: string;
-    pic: string;
-    title: string;
-    location: string;
-    seller: string;
-    type: string;
-    description: string;
-    amount: string;
-    price: string;
-}
-
-interface ItemPlus {
-    data: Item;
-    dealID?: number;
-}
-
 const state = reactive({
     Cards: new Array<Item>(),
 });
-
 fetch("./items.json", {
     headers: {
         "Content-Type": "application/json",
@@ -38,6 +21,7 @@ fetch("./items.json", {
     .then((response) => response.json())
     .then((data) => (state.Cards = data));
 
+// METHODS
 function getModeCards(): ItemPlus[] {
     switch (store.mode) {
         case 0:
@@ -76,6 +60,7 @@ function searchCards() {
     );
 }
 
+// COMPUTED
 const filteredCards = computed(() => {
     if (store.filter === 0) {
         return searchCards();

@@ -1,11 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import type { Deal } from "@/common/types";
 
-interface Deal {
-    dealID: number;
-    itemID: number;
-    isPaied: boolean;
-}
 
 export const generalStore = defineStore("store", () => {
     // переменные
