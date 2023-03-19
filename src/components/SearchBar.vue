@@ -24,7 +24,13 @@
             </button>
         </div>
         <div class="search__box">
-            <input type="search" name="" id="" class="search__input text" />
+            <input
+                type="search"
+                name=""
+                id=""
+                class="search__input text"
+                v-model="searchWord"
+            />
             <button class="search__btn text">
                 <span class="search__btn-text">Search</span>
                 <img
@@ -40,11 +46,18 @@
 
 <script setup lang="ts">
 // TODO прикурутить TS
-import { reactive } from "vue";
+import { reactive, watch, ref } from "vue";
 import { generalStore } from "@/store/store";
 const store = generalStore();
 const state = reactive({
     searchFilters: [true, false, false],
+});
+
+const searchWord = ref<string>('');
+watch(searchWord, (word) => {
+    setTimeout(() => {
+        store.searchWord = word;
+    }, 500);
 });
 
 function setSearchFilter(num: number): void {

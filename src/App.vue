@@ -53,11 +53,19 @@ function getModeCards(): ItemPlus[] {
     }
 }
 
+function searchCards() {
+    const cards = getModeCards();
+    if (store.searchWord === '') {
+        return cards;
+    }
+    return cards.filter((x) => x.data.title.includes(store.searchWord));
+}
+
 const filteredCards = computed(() => {
     if (store.filter === 0) {
-        return getModeCards();
+        return searchCards();
     }
-    return getModeCards().filter(
+    return searchCards().filter(
         (x) => parseInt(x.data.state) === store.filter
     );
 });
