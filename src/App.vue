@@ -2,8 +2,7 @@
 import Navigation from "./components/Navigation.vue";
 import SearchBar from "./components/SearchBar.vue";
 import Card from "./components/Card.vue";
-import cards from "@/data/items.json";
-import { computed } from "vue";
+import { reactive, computed } from "vue";
 import { generalStore } from "@/store/store";
 const store = generalStore();
 
@@ -25,10 +24,24 @@ interface ItemPlus {
     dealID?: number;
 }
 
+const state = reactive({
+    Cards: new Array<Item>
+});
+
+fetch("./items.json", {
+    headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    },
+})
+    .then((response) => response.json())
+    .then((data) => (state.Cards = data));
+
+
 function getModeCards(): ItemPlus[] {
     switch (store.mode) {
         case 0:
-            return cards
+            return state.Cards
                 .filter((x) => store.favItems.has(parseInt(x.id)))
                 .map((x) => {
                     return {
@@ -36,7 +49,7 @@ function getModeCards(): ItemPlus[] {
                     };
                 });
         case 1:
-            return cards.map((x) => {
+            return state.Cards.map((x) => {
                 return {
                     data: x,
                 };
@@ -44,7 +57,7 @@ function getModeCards(): ItemPlus[] {
         case 2:
             return store.dealItems.map((x) => {
                 return {
-                    data: cards.find((y) => parseInt(y.id) === x.itemID),
+                    data: state.Cards.find((y) => parseInt(y.id) === x.itemID),
                     dealID: x.dealID,
                 } as ItemPlus;
             }) as ItemPlus[];
@@ -55,7 +68,7 @@ function getModeCards(): ItemPlus[] {
 
 function searchCards() {
     const cards = getModeCards();
-    if (store.searchWord === '') {
+    if (store.searchWord === "") {
         return cards;
     }
     return cards.filter((x) => x.data.title.includes(store.searchWord));
@@ -65,9 +78,7 @@ const filteredCards = computed(() => {
     if (store.filter === 0) {
         return searchCards();
     }
-    return searchCards().filter(
-        (x) => parseInt(x.data.state) === store.filter
-    );
+    return searchCards().filter((x) => parseInt(x.data.state) === store.filter);
 });
 </script>
 
