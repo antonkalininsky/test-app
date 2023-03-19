@@ -1,23 +1,43 @@
+<script setup lang="ts">
+import { watch, ref } from "vue";
+import { generalStore } from "@/store/store";
+const store = generalStore();
+
+const searchWord = ref<string>('');
+searchWord.value = store.searchWord;
+watch(searchWord, (word) => {
+    setTimeout(() => {
+        store.searchWord = word;
+        store.updateLocalStorage();
+    }, 500);
+});
+
+function setSearchFilter(num: number): void {
+    store.filter = num;
+    store.updateLocalStorage();
+}
+</script>
+
 <template>
     <div class="search text">
         <div class="search__filter">
             <button
                 class="search__option text text--light"
-                :class="{ 'search__option--active': state.searchFilters[0] }"
+                :class="{ 'search__option--active': store.filter === 0 }"
                 @click="setSearchFilter(0)"
             >
                 Все типы
             </button>
             <button
                 class="search__option text text--light"
-                :class="{ 'search__option--active': state.searchFilters[1] }"
+                :class="{ 'search__option--active': store.filter === 1 }"
                 @click="setSearchFilter(1)"
             >
                 Прямые продажи
             </button>
             <button
                 class="search__option text text--light"
-                :class="{ 'search__option--active': state.searchFilters[2] }"
+                :class="{ 'search__option--active': store.filter === 2 }"
                 @click="setSearchFilter(2)"
             >
                 Аукцион
@@ -43,31 +63,6 @@
         </div>
     </div>
 </template>
-
-<script setup lang="ts">
-// TODO прикурутить TS
-import { reactive, watch, ref } from "vue";
-import { generalStore } from "@/store/store";
-const store = generalStore();
-const state = reactive({
-    searchFilters: [true, false, false],
-});
-
-const searchWord = ref<string>('');
-watch(searchWord, (word) => {
-    setTimeout(() => {
-        store.searchWord = word;
-    }, 500);
-});
-
-function setSearchFilter(num: number): void {
-    state.searchFilters.forEach((x, ind, arr) => {
-        arr[ind] = false;
-    });
-    state.searchFilters[num] = true;
-    store.filter = num;
-}
-</script>
 
 <style scoped>
 .search {

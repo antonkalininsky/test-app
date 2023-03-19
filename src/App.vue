@@ -5,6 +5,7 @@ import Card from "./components/Card.vue";
 import { reactive, computed } from "vue";
 import { generalStore } from "@/store/store";
 const store = generalStore();
+store.readLocalStorage();
 
 interface Item {
     id: string;
@@ -36,7 +37,6 @@ fetch("./items.json", {
 })
     .then((response) => response.json())
     .then((data) => (state.Cards = data));
-
 
 function getModeCards(): ItemPlus[] {
     switch (store.mode) {

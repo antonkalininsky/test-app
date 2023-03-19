@@ -15,6 +15,7 @@ function setCardsGroup(num: number): void {
     });
     state.navActive[num] = true;
     store.mode = num;
+    store.updateLocalStorage();
 }
 </script>
 

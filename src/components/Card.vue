@@ -41,6 +41,7 @@ function addFavourite(): void {
     } else {
         store.favItems.add(parseInt(props.data.id));
     }
+    store.updateLocalStorage();
 }
 
 function addDeals(): void {
@@ -50,6 +51,7 @@ function addDeals(): void {
         isPaied: false,
     });
     store.dealIncrement();
+    store.updateLocalStorage();
 }
 
 function payDeal(): void {
@@ -57,6 +59,7 @@ function payDeal(): void {
         return
     }
     store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied = true;
+    store.updateLocalStorage();
 }
 </script>
 
