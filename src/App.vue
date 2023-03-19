@@ -26,7 +26,7 @@ interface ItemPlus {
 }
 
 const state = reactive({
-    Cards: new Array<Item>
+    Cards: new Array<Item>(),
 });
 
 fetch("./items.json", {
@@ -41,13 +41,13 @@ fetch("./items.json", {
 function getModeCards(): ItemPlus[] {
     switch (store.mode) {
         case 0:
-            return state.Cards
-                .filter((x) => store.favItems.has(parseInt(x.id)))
-                .map((x) => {
-                    return {
-                        data: x,
-                    };
-                });
+            return state.Cards.filter((x) =>
+                store.favItems.has(parseInt(x.id))
+            ).map((x) => {
+                return {
+                    data: x,
+                };
+            });
         case 1:
             return state.Cards.map((x) => {
                 return {
@@ -71,7 +71,9 @@ function searchCards() {
     if (store.searchWord === "") {
         return cards;
     }
-    return cards.filter((x) => x.data.title.includes(store.searchWord));
+    return cards.filter((x) =>
+        x.data.title.toLowerCase().includes(store.searchWord.toLowerCase())
+    );
 }
 
 const filteredCards = computed(() => {

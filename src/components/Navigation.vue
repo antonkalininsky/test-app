@@ -122,6 +122,6 @@ function setCardsGroup(num: number): void {
 }
 
 .nav__text {
-    font-weight: 800;
+    font-weight: 600;
 }
 </style>

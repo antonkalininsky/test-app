@@ -25,12 +25,21 @@ const props = defineProps({
     },
 });
 
-const calcPriceTotal = computed(() => props.data.amount * props.data.price);
-const imgSrc = computed(() => "/src/assets/img/products/" + props.data.pic);
+function priceSpacer(str: string): string {
+    if (str.length <= 3) {
+        return str;
+    }
+    return priceSpacer(str.slice(0, -3)) + " " + str.slice(-3);
+}
+
+const calcPriceTotal = computed(() => {
+    return priceSpacer(String(props.data.amount * props.data.price));
+});
+const imgSrc = computed(() => "./src/assets/img/products/" + props.data.pic);
 const favButton2 = computed(() => store.favItems.has(parseInt(props.data.id)));
 const payStatus = computed(() => {
     if (props.dealID === undefined) {
-        return false
+        return false;
     }
     return store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied;
 });
@@ -56,7 +65,7 @@ function addDeals(): void {
 
 function payDeal(): void {
     if (props.dealID === undefined) {
-        return
+        return;
     }
     store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied = true;
     store.updateLocalStorage();
@@ -103,7 +112,10 @@ function payDeal(): void {
         <!-- /card__main -->
         <div class="card__offer">
             <div class="card__info">
-                <div class="card__price-total">{{ calcPriceTotal }} ₽</div>
+                <div class="card__price-total">
+                    {{ calcPriceTotal }}
+                    <span class="money-sign">&#8381;</span>
+                </div>
                 <ul class="card__list list">
                     <li class="list__item">
                         <div class="list__text text--light">Количество</div>
@@ -115,7 +127,10 @@ function payDeal(): void {
                         <div class="list__text text--light">
                             Стоимость за штуку
                         </div>
-                        <div class="list__amount">{{ props.data.price }} ₽</div>
+                        <div class="list__amount">
+                            {{ priceSpacer(props.data.price) }}
+                            <span class="money-sign">&#8381;</span>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -307,6 +322,8 @@ function payDeal(): void {
     background: #f4f5f9;
     border: unset;
     border-radius: 10px;
+
+    font-weight: 600;
 
     cursor: pointer;
 }
