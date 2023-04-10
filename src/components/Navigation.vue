@@ -1,41 +1,18 @@
 <script setup lang="ts">
-import { generalStore } from "@/store/store";
 import { router } from "@/router/router";
-
-const store = generalStore();
-
-// SETUP
-store.mode = 1;
-
-// METHODS
-function setCardsGroup(num: number): void {
-    store.mode = num;
-    store.updateLocalStorage();
-
-    switch (num) {
-        case 0:
-            router.push('favourite');
-            break;
-        case 1:
-            router.push('warehouse');
-            break;
-        case 2:
-            router.push('deals');
-            break;
-        default:
-            break;
-    }
-}
 </script>
 
 <template>
     <header class="header text">
         <div class="header__box"></div>
         <nav class="header__nav nav">
-            <button
+            <router-link
+                to="favourite"
                 class="nav__item"
-                :class="{ 'nav__item--active': store.mode === 0 }"
-                @click="setCardsGroup(0)"
+                :class="{
+                    'nav__item--active':
+                        router.currentRoute.value.name === 'favourite',
+                }"
             >
                 <div class="nav__pic">
                     <img
@@ -46,12 +23,15 @@ function setCardsGroup(num: number): void {
                     />
                 </div>
                 <div class="nav__text">Избранное</div>
-            </button>
+            </router-link>
             <!-- /nav__item -->
-            <button
+            <router-link
+                to="warehouse"
                 class="nav__item"
-                :class="{ 'nav__item--active': store.mode === 1 }"
-                @click="setCardsGroup(1)"
+                :class="{
+                    'nav__item--active':
+                        router.currentRoute.value.name === 'warehouse',
+                }"
             >
                 <div class="nav__pic">
                     <img
@@ -62,12 +42,15 @@ function setCardsGroup(num: number): void {
                     />
                 </div>
                 <div class="nav__text">Склад</div>
-            </button>
+            </router-link>
             <!-- /nav__item -->
-            <button
+            <router-link
+                to="deals"
                 class="nav__item"
-                :class="{ 'nav__item--active': store.mode === 2 }"
-                @click="setCardsGroup(2)"
+                :class="{
+                    'nav__item--active':
+                        router.currentRoute.value.name === 'deals',
+                }"
             >
                 <div class="nav__pic">
                     <img
@@ -78,7 +61,7 @@ function setCardsGroup(num: number): void {
                     />
                 </div>
                 <div class="nav__text">Сделки</div>
-            </button>
+            </router-link>
             <!-- /nav__item -->
         </nav>
         <!-- /header__nav -->
