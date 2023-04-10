@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import Navigation from "./components/Navigation.vue";
-import SearchBar from "./components/SearchBar.vue";
-import Card from "./components/Card.vue";
+import Card from "./Card.vue";
 import { reactive, computed } from "vue";
 import { generalStore } from "@/store/store";
-import type { Item, ItemPlus } from "./common/types";
+import type { Item, ItemPlus } from "@/common/types";
 const store = generalStore();
 
 // SETUP
@@ -69,31 +67,21 @@ const filteredCards = computed(() => {
 });
 </script>
 
-<template>
-    <!-- <div class="wrapper-box">
-        <Navigation />
-        <SearchBar />
-        <div class="results">
-            <Card
-                v-for="card in filteredCards"
-                :data="card.data"
-                :dealID="card.dealID"
-                class="results__item"
-            />
-            <div class="results__empty text" v-if="filteredCards.length === 0">
-                Ничего не найдено!
-            </div>
+<template lang="">
+    <div class="results">
+        <Card
+            v-for="card in filteredCards"
+            :data="card.data"
+            :dealID="card.dealID"
+            class="results__item"
+        />
+        <div class="results__empty text" v-if="filteredCards.length === 0">
+            Ничего не найдено!
         </div>
-    </div> -->
-    <router-view></router-view>
+    </div>
 </template>
 
 <style scoped>
-.wrapper-box {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .results__item {
     margin-bottom: 40px;
 }

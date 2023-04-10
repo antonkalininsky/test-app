@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { generalStore } from "@/store/store";
+import { router } from "@/router/router";
+
 const store = generalStore();
 
 // SETUP
@@ -9,6 +11,20 @@ store.mode = 1;
 function setCardsGroup(num: number): void {
     store.mode = num;
     store.updateLocalStorage();
+
+    switch (num) {
+        case 0:
+            router.push('favourite');
+            break;
+        case 1:
+            router.push('warehouse');
+            break;
+        case 2:
+            router.push('deals');
+            break;
+        default:
+            break;
+    }
 }
 </script>
 
