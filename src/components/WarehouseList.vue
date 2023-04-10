@@ -25,7 +25,7 @@ fetch("./items.json", {
 // COMPUTED
 const shownCards = computed(() => {
     return filterCards(
-        searchCards(getModeCards(state.Cards), store.searchWord),
+        searchCards(getModeCards(state.Cards, 1), store.searchWord),
         store.filter
     );
 });
