@@ -6,6 +6,10 @@ const routes = [
         component: () => import('./../components/Main.vue'),
         children: [
             {
+                path: '',
+                redirect: { name: "warehouse" }
+            },
+            {
                 path: 'favourite',
                 name: 'favourite',
                 component: () => import('./../components/FavouriteList.vue'),
