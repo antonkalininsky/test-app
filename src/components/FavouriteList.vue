@@ -2,7 +2,10 @@
 import Card from "./Card.vue";
 import { reactive, computed } from "vue";
 import { generalStore } from "@/store/store";
-import type { Item, ItemPlus } from "@/common/types";
+import type { Item } from "@/common/types";
+import { getModeCards } from "@/funs/getModeCards";
+import { searchCards } from "@/funs/searchCards";
+import { filterCards } from "@/funs/filterCards";
 const store = generalStore();
 
 // SETUP
@@ -19,63 +22,24 @@ fetch("./items.json", {
     .then((response) => response.json())
     .then((data) => (state.Cards = data));
 
-// METHODS
-function getModeCards(): ItemPlus[] {
-    switch (store.mode) {
-        case 0:
-            return state.Cards.filter((x) =>
-                store.favItems.has(parseInt(x.id))
-            ).map((x) => {
-                return {
-                    data: x,
-                };
-            });
-        case 1:
-            return state.Cards.map((x) => {
-                return {
-                    data: x,
-                };
-            });
-        case 2:
-            return store.dealItems.map((x) => {
-                return {
-                    data: state.Cards.find((y) => parseInt(y.id) === x.itemID),
-                    dealID: x.dealID,
-                } as ItemPlus;
-            }) as ItemPlus[];
-        default:
-            return [];
-    }
-}
-
-function searchCards() {
-    const cards = getModeCards();
-    if (store.searchWord === "") {
-        return cards;
-    }
-    return cards.filter((x) =>
-        x.data.title.toLowerCase().includes(store.searchWord.toLowerCase())
-    );
-}
-
 // COMPUTED
-const filteredCards = computed(() => {
-    if (store.filter === 0) {
-        return searchCards();
-    }
-    return searchCards().filter((x) => parseInt(x.data.state) === store.filter);
+const shownCards = computed(() => {
+    return filterCards(
+        searchCards(getModeCards(state.Cards), store.searchWord),
+        store.filter
+    );
 });
 </script>
 
 <template lang="">
     <div class="results">
         <Card
-            v-for="card in filteredCards"
+            v-for="card in shownCards"
             :data="card.data"
             :dealID="card.dealID"
             class="results__item"
         />
-        <div class="results__empty text" v-if="filteredCards.length === 0">
+        <div class="results__empty text" v-if="shownCards.length === 0">
             Ничего не найдено!
         </div>
     </div>
