@@ -25,6 +25,10 @@ const props = defineProps({
         type: Number,
         required: false,
     },
+    mode: {
+        type: Number,
+        default: 0,
+    }
 });
 
 // COMPUTED
@@ -142,7 +146,7 @@ function payDeal(): void {
                 <button
                     class="card__add-deals text button button--wide button--click"
                     @click="addDeals()"
-                    v-if="store.mode !== 2"
+                    v-if="props.mode === 0"
                 >
                     Добавить в сделки
                 </button>
@@ -150,7 +154,7 @@ function payDeal(): void {
                     class="card__add-deals text button button--wide button--green"
                     :class="{ 'button--gray': payStatus }"
                     @click="payDeal()"
-                    v-if="store.mode === 2"
+                    v-else
                 >
                     <span v-if="payStatus">Оплачено</span>
                     <span v-else>Оплатить</span>
