@@ -3,7 +3,7 @@ import { watch, ref } from "vue";
 import { generalStore } from "@/store/store";
 const store = generalStore();
 
-const searchWord = ref<string>('');
+const searchWord = ref<string>("");
 searchWord.value = store.searchWord;
 watch(searchWord, (word) => {
     setTimeout(() => {
@@ -135,5 +135,24 @@ function setSearchFilter(num: number): void {
 
 .search__btn-text {
     display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .search {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .search__box {
+        margin-bottom: 20px;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .search__option {
+        font-size: 12px;
+    }
 }
 </style>

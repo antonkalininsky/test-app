@@ -28,7 +28,7 @@ const props = defineProps({
     mode: {
         type: Number,
         default: 0,
-    }
+    },
 });
 
 // COMPUTED
@@ -276,6 +276,10 @@ function payDeal(): void {
 
 .card__description {
     line-height: 150%;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card__offer {
@@ -359,5 +363,32 @@ function payDeal(): void {
 .button--click:active {
     color: white;
     background: #2942a8;
+}
+
+@media screen and (max-width: 1000px) {
+    .card {
+        display: grid;
+        grid-template-columns: unset;
+        grid-template-rows: auto auto;
+    }
+
+    .card__main {
+        display: grid;
+        grid-template-columns: unset;
+        grid-template-rows: auto auto;
+        padding: 10px 10px 20px 10px;
+    }
+
+    .card__pic {
+        margin: 0 auto;
+    }
+
+    .card__text {
+        padding-top: 10px;
+    }
+
+    .card__description {
+        font-size: 12px;
+    }
 }
 </style>

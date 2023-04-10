@@ -80,6 +80,12 @@ import { router } from "@/router/router";
     align-items: center;
 }
 
+@media screen and (max-width: 500px) {
+    .header {
+        justify-content: center;
+    }
+}
+
 .header__box {
     position: absolute;
     top: 0;
