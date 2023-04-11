@@ -10,7 +10,7 @@ a {
     color: unset;
 }
 
-html, body {
+html {
     overflow: auto;
     scrollbar-gutter: stable both-edges;
 }
