@@ -10,6 +10,11 @@ a {
     color: unset;
 }
 
+html, body {
+    overflow: auto;
+    scrollbar-gutter: stable both-edges;
+}
+
 button {
     background-color: unset;
     border: unset;

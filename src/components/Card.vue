@@ -366,18 +366,34 @@ function payDeal(): void {
 }
 
 @media screen and (max-width: 1000px) {
+    .card__main {
+        display: block;
+        grid-template-columns: unset;
+        grid-template-rows: unset;
+        padding: 10px 10px 20px 10px;
+
+        position: relative;
+    }
+
+    .card__pic {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        margin: 0;
+
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media screen and (max-width: 820px) {
     .card {
         display: grid;
         grid-template-columns: unset;
         grid-template-rows: auto auto;
     }
 
-    .card__main {
-        display: grid;
-        grid-template-columns: unset;
-        grid-template-rows: auto auto;
-        padding: 10px 10px 20px 10px;
-    }
 
     .card__pic {
         margin: 0 auto;
@@ -389,6 +405,12 @@ function payDeal(): void {
 
     .card__description {
         font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .card__pic {
+        display: none;
     }
 }
 </style>
