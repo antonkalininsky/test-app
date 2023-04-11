@@ -8,13 +8,11 @@ searchWord.value = store.searchWord;
 watch(searchWord, (word) => {
     setTimeout(() => {
         store.searchWord = word;
-        store.updateLocalStorage();
     }, 500);
 });
 
 function setSearchFilter(num: number): void {
     store.filter = num;
-    store.updateLocalStorage();
 }
 </script>
 

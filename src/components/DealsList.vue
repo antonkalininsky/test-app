@@ -9,7 +9,6 @@ import { filterCards } from "@/funs/filterCards";
 const store = generalStore();
 
 // SETUP
-store.readLocalStorage();
 const state = reactive({
     Cards: new Array<Item>(),
 });

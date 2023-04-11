@@ -36,12 +36,12 @@ const calcPriceTotal = computed(() => {
     return priceSpacer(String(props.data.amount * props.data.price));
 });
 const imgSrc = computed(() => "/images/products/" + props.data.pic);
-const favButton = computed(() => store.favItems.has(parseInt(props.data.id)));
+const favButton = computed(() => store.checkFavourite(parseInt(props.data.id)));
 const payStatus = computed(() => {
     if (props.dealID === undefined) {
         return false;
     }
-    return store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied;
+    return store.dealItems.find((item) => props.dealID === item.dealID)!.isPaied;
 });
 
 // METHODS
@@ -49,22 +49,7 @@ function priceSpacer(str: string): string {
     if (str.length <= 3) {
         return str;
     }
-    return priceSpacer(str.slice(0, -3)) + " " + str.slice(-3);
-}
-
-function addFavourite(): void {
-    store.toggleFavourite(parseInt(props.data.id));
-    store.updateLocalStorage();
-}
-
-function addDeals(): void {
-    store.addDeal(parseInt(props.data.id));
-    store.updateLocalStorage();
-}
-
-function payDeal(): void {
-    store.payDeal(props.dealID);
-    store.updateLocalStorage();
+    return `${priceSpacer(str.slice(0, -3))} ${str.slice(-3)}`;
 }
 </script>
 
@@ -133,7 +118,7 @@ function payDeal(): void {
             <div class="card__control">
                 <button
                     class="card__add-deals text button button--wide button--click"
-                    @click="addDeals()"
+                    @click="store.addDeal(parseInt(props.data.id))"
                     v-if="props.mode === 0"
                 >
                     Добавить в сделки
@@ -141,7 +126,7 @@ function payDeal(): void {
                 <button
                     class="card__add-deals text button button--wide button--green"
                     :class="{ 'button--gray': payStatus }"
-                    @click="payDeal()"
+                    @click="store.payDeal(props.dealID)"
                     v-else
                 >
                     <span v-if="payStatus">Оплачено</span>
@@ -150,7 +135,7 @@ function payDeal(): void {
                 <button
                     class="card__add-fav text button"
                     :class="{ 'button--active': favButton }"
-                    @click="addFavourite()"
+                    @click="store.toggleFavourite(parseInt(props.data.id))"
                 >
                     <img
                         src="@/assets/img/cards/heart-w.svg"

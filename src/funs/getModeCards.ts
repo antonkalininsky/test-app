@@ -3,11 +3,10 @@ import { generalStore } from "@/store/store";
 
 export function getModeCards(cards: Array<Item>, mode: number): ItemPlus[] {
     const store = generalStore();
-    store.readLocalStorage();
     switch (mode) {
         case 0:
             return cards
-                .filter((card) => store.favItems.has(parseInt(card.id)))
+                .filter((card) => store.checkFavourite(parseInt(card.id)))
                 .map((card) => {
                     return {
                         data: card,
