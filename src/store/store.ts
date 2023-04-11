@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Deal } from "@/common/types";
 
-
 export const generalStore = defineStore("store", () => {
     // переменные
     const mode = ref<number>(0);
@@ -12,8 +11,27 @@ export const generalStore = defineStore("store", () => {
     const dealCount = ref<number>(0);
     const searchWord = ref<string>("");
 
-    function dealIncrement(): void {
+    function toggleFavourite(id: number): void {
+        if (favItems.value.has(id)) {
+            favItems.value.delete(id);
+        } else {
+            favItems.value.add(id);
+        }
+    }
+
+    function addDeal(id: number): void {
+        dealItems.value.push({
+            dealID: dealCount.value,
+            itemID: id,
+            isPaied: false,
+        });
         dealCount.value++;
+    }
+
+    function payDeal(id ?: number): void {
+        if (id !== undefined) {
+            dealItems.value.find((item) => id === item.dealID)!.isPaied = true;
+        }
     }
 
     function updateLocalStorage(): void {
@@ -50,9 +68,11 @@ export const generalStore = defineStore("store", () => {
         favItems,
         dealItems,
         dealCount,
-        dealIncrement,
         searchWord,
         updateLocalStorage,
         readLocalStorage,
+        addDeal,
+        toggleFavourite,
+        payDeal
     };
 });

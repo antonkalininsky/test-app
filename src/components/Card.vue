@@ -36,7 +36,7 @@ const calcPriceTotal = computed(() => {
     return priceSpacer(String(props.data.amount * props.data.price));
 });
 const imgSrc = computed(() => "/images/products/" + props.data.pic);
-const favButton2 = computed(() => store.favItems.has(parseInt(props.data.id)));
+const favButton = computed(() => store.favItems.has(parseInt(props.data.id)));
 const payStatus = computed(() => {
     if (props.dealID === undefined) {
         return false;
@@ -53,29 +53,17 @@ function priceSpacer(str: string): string {
 }
 
 function addFavourite(): void {
-    if (favButton2.value) {
-        store.favItems.delete(parseInt(props.data.id));
-    } else {
-        store.favItems.add(parseInt(props.data.id));
-    }
+    store.toggleFavourite(parseInt(props.data.id));
     store.updateLocalStorage();
 }
 
 function addDeals(): void {
-    store.dealItems.push({
-        dealID: store.dealCount,
-        itemID: parseInt(props.data.id),
-        isPaied: false,
-    });
-    store.dealIncrement();
+    store.addDeal(parseInt(props.data.id));
     store.updateLocalStorage();
 }
 
 function payDeal(): void {
-    if (props.dealID === undefined) {
-        return;
-    }
-    store.dealItems.find((x) => props.dealID === x.dealID)!.isPaied = true;
+    store.payDeal(props.dealID);
     store.updateLocalStorage();
 }
 </script>
@@ -161,7 +149,7 @@ function payDeal(): void {
                 </button>
                 <button
                     class="card__add-fav text button"
-                    :class="{ 'button--active': favButton2 }"
+                    :class="{ 'button--active': favButton }"
                     @click="addFavourite()"
                 >
                     <img
@@ -169,7 +157,7 @@ function payDeal(): void {
                         alt=""
                         srcset=""
                         class="button__img"
-                        v-if="favButton2"
+                        v-if="favButton"
                     />
                     <img
                         src="@/assets/img/cards/heart-b.svg"
@@ -393,7 +381,6 @@ function payDeal(): void {
         grid-template-columns: unset;
         grid-template-rows: auto auto;
     }
-
 
     .card__pic {
         margin: 0 auto;
