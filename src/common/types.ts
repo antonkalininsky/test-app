@@ -1,3 +1,5 @@
+import type { Ref } from "vue";
+
 export interface Item {
     id: string;
     state: string;
@@ -20,4 +22,17 @@ export interface Deal {
     dealID: number;
     itemID: number;
     isPaied: boolean;
+}
+
+export interface GeneralStore {
+    mode: Ref<number>,
+    filter: Ref<number>,
+    favItems: Ref<Array<number>>,
+    dealItems: Ref<Array<Deal>>,
+    dealCount: Ref<number>,
+    searchWord: Ref<string>,
+    toggleFavourite(id: number): void,
+    checkFavourite(id: number): boolean,
+    addDeal(id: number): void,
+    payDeal(id?: number): void
 }

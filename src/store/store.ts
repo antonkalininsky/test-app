@@ -1,20 +1,20 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import type { Deal } from "@/common/types";
+import type { GeneralStore } from "@/common/types";
 
 export const generalStore = defineStore(
     "store",
-    () => {
+    (): GeneralStore => {
         // переменные
-        const mode = ref<number>(0);
-        const filter = ref<number>(0);
-        const favItems = ref<Array<number>>(new Array());
-        const dealItems = ref<Array<Deal>>(new Array<Deal>());
-        const dealCount = ref<number>(0);
-        const searchWord = ref<string>("");
+        const mode = ref(0);
+        const filter = ref(0);
+        const favItems = ref(new Array());
+        const dealItems = ref(new Array());
+        const dealCount = ref(0);
+        const searchWord = ref("");
 
         function toggleFavourite(id: number): void {
-            if (favItems.value.includes(id)) { 
+            if (favItems.value.includes(id)) {
                 favItems.value.splice(favItems.value.indexOf(id), 1);
             } else {
                 favItems.value.push(id);
@@ -41,7 +41,6 @@ export const generalStore = defineStore(
             }
         }
 
-
         return {
             mode,
             filter,
@@ -52,10 +51,10 @@ export const generalStore = defineStore(
             addDeal,
             payDeal,
             toggleFavourite,
-            checkFavourite
+            checkFavourite,
         };
     },
     {
-        persist: true
+        persist: true,
     }
 );
