@@ -343,15 +343,23 @@ function priceSpacer(str: string): string {
         display: block;
         grid-template-columns: unset;
         grid-template-rows: unset;
-        padding: 10px 10px 20px 10px;
+        padding: 20px 20px 20px 20px;
 
         position: relative;
     }
 
+    .card__text > * {
+        margin-left: 180px;
+    }
+
+    .card__description {
+        margin: 0;
+    }
+
     .card__pic {
         position: absolute;
-        right: 10px;
-        top: 10px;
+        left: 20px;
+        top: 20px;
 
         margin: 0;
 
@@ -371,18 +379,18 @@ function priceSpacer(str: string): string {
         margin: 0 auto;
     }
 
-    .card__text {
-        padding-top: 10px;
-    }
-
     .card__description {
         font-size: 12px;
     }
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 500px) {
     .card__pic {
         display: none;
+    }
+
+    .card__text > * {
+        margin-left: 0;
     }
 }
 </style>
