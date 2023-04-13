@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { watch, ref } from "vue";
 import { generalStore } from "@/store/store";
+import { debounce } from "@/funs/debounce"
 const store = generalStore();
 
 const searchWord = ref<string>("");
 searchWord.value = store.searchWord;
-watch(searchWord, (word) => {
-    setTimeout(() => {
-        store.searchWord = word;
-    }, 500);
+
+const searchDebouncer = debounce((word: string) => {
+    store.searchWord = word;
+}, 300);
+watch(searchWord, () => {
+    searchDebouncer(searchWord.value);
 });
 
 function setSearchFilter(num: number): void {
@@ -145,7 +148,6 @@ function setSearchFilter(num: number): void {
     .search__box {
         margin-bottom: 20px;
     }
-
 }
 
 @media screen and (max-width: 400px) {
