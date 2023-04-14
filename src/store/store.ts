@@ -14,7 +14,7 @@ export const generalStore = defineStore(
         const searchWord = ref("");
 
         function toggleFavourite(id: number): void {
-            if (favItems.value.includes(id)) {
+            if (checkFavourite(id)) {
                 favItems.value.splice(favItems.value.indexOf(id), 1);
             } else {
                 favItems.value.push(id);

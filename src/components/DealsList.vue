@@ -24,7 +24,7 @@ fetch("./items.json", {
 // COMPUTED
 const shownCards = computed(() => {
     return filterCards(
-        searchCards(getModeCards(state.Cards, 2), store.searchWord),
+        searchCards(getModeCards(state.Cards, "deals"), store.searchWord),
         store.filter
     );
 });
@@ -36,7 +36,7 @@ const shownCards = computed(() => {
             v-for="card in shownCards"
             :data="card.data"
             :dealID="card.dealID"
-            :mode="1"
+            :mode="'buying'"
             class="results__item"
         />
         <div class="results__empty text" v-if="shownCards.length === 0">

@@ -66,3 +66,5 @@ export interface CardProps {
     dealID?: number,
     mode: number
 }
+
+export enum FilterState { No, Direct, Auction }

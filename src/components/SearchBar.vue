@@ -2,6 +2,7 @@
 import { watch, ref } from "vue";
 import { generalStore } from "@/store/store";
 import { debounce } from "@/funs/debounce"
+import { FilterState } from "@/common/types";
 const store = generalStore();
 
 const searchWord = ref<string>("");
@@ -14,7 +15,7 @@ watch(searchWord, () => {
     searchDebouncer(searchWord.value);
 });
 
-function setSearchFilter(num: number): void {
+function setSearchFilter(num: FilterState): void {
     store.filter = num;
 }
 </script>
@@ -25,21 +26,21 @@ function setSearchFilter(num: number): void {
             <button
                 class="search__option text text--light"
                 :class="{ 'search__option--active': store.filter === 0 }"
-                @click="setSearchFilter(0)"
+                @click="setSearchFilter(FilterState.No)"
             >
                 Все типы
             </button>
             <button
                 class="search__option text text--light"
                 :class="{ 'search__option--active': store.filter === 1 }"
-                @click="setSearchFilter(1)"
+                @click="setSearchFilter(FilterState.Direct)"
             >
                 Прямые продажи
             </button>
             <button
                 class="search__option text text--light"
                 :class="{ 'search__option--active': store.filter === 2 }"
-                @click="setSearchFilter(2)"
+                @click="setSearchFilter(FilterState.Auction)"
             >
                 Аукцион
             </button>

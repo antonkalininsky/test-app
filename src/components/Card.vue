@@ -21,7 +21,7 @@ interface CardProps {
         price: string,
     },
     dealID?: number,
-    mode: number
+    mode: string
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<CardProps>(), {
             price: "1000",
         };
     },
-    mode: 0,
+    mode: "default",
 });
 
 // COMPUTED
@@ -133,7 +133,7 @@ function priceSpacer(str: string): string {
                 <button
                     class="card__add-deals text button button--wide button--click"
                     @click="store.addDeal(parseInt(props.data.id))"
-                    v-if="props.mode === 0"
+                    v-if="props.mode === 'default'"
                 >
                     Добавить в сделки
                 </button>
