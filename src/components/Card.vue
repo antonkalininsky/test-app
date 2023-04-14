@@ -4,11 +4,29 @@ import { stateNames } from "@/data/stateNames";
 import { generalStore } from "@/store/store";
 const store = generalStore();
 
+
+
 // PROPS
-const props = defineProps({
+interface CardProps {
     data: {
-        type: Object,
-        default: {
+        id: string,
+        state: string,
+        pic: string,
+        title: string,
+        location: string,
+        seller: string,
+        type: string,
+        description: string,
+        amount: string,
+        price: string,
+    },
+    dealID?: number,
+    mode: number
+}
+
+const props = withDefaults(defineProps<CardProps>(), {
+    data: () => {
+        return {
             id: "0",
             state: "Аукцион",
             pic: "product-1.png",
@@ -19,21 +37,16 @@ const props = defineProps({
             description: "Описание",
             amount: "99",
             price: "1000",
-        },
+        };
     },
-    dealID: {
-        type: Number,
-        required: false,
-    },
-    mode: {
-        type: Number,
-        default: 0,
-    },
+    mode: 0,
 });
 
 // COMPUTED
 const calcPriceTotal = computed(() => {
-    return priceSpacer(String(props.data.amount * props.data.price));
+    return priceSpacer(
+        String(parseFloat(props.data.amount) * parseFloat(props.data.price))
+    );
 });
 const imgSrc = computed(() => "/images/products/" + props.data.pic);
 const favButton = computed(() => store.checkFavourite(parseInt(props.data.id)));
@@ -41,7 +54,8 @@ const payStatus = computed(() => {
     if (props.dealID === undefined) {
         return false;
     }
-    return store.dealItems.find((item) => props.dealID === item.dealID)!.isPaied;
+    return store.dealItems.find((item) => props.dealID === item.dealID)!
+        .isPaied;
 });
 
 // METHODS

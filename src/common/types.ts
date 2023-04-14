@@ -36,3 +36,33 @@ export interface GeneralStore {
     addDeal(id: number): void,
     payDeal(id?: number): void
 }
+
+export interface CardData {
+    id: string,
+    state: string,
+    pic: string,
+    title: string,
+    location: string,
+    seller: string,
+    type: string,
+    description: string,
+    amount: string,
+    price: string,
+}
+
+export interface CardProps {
+    data: {
+        id: string,
+        state: string,
+        pic: string,
+        title: string,
+        location: string,
+        seller: string,
+        type: string,
+        description: string,
+        amount: string,
+        price: string,
+    },
+    dealID?: number,
+    mode: number
+}
