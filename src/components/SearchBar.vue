@@ -97,6 +97,11 @@ function setSearchFilter(num: number): void {
     font-size: 15px;
 }
 
+.search__option:hover {
+    text-decoration: underline 1px solid;
+    text-underline-offset: 2px;
+}
+
 .search__option--active {
     color: #2d3b87;
 }
@@ -132,6 +137,15 @@ function setSearchFilter(num: number): void {
     align-items: center;
 
     cursor: pointer;
+}
+
+.search__btn:hover {
+    background-color: #4f60c0;
+}
+
+.search__btn:active {
+    background-color: #2d3b87;
+    border-top: 2px solid #0f1956;
 }
 
 .search__btn-text {

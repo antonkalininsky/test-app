@@ -327,6 +327,10 @@ function priceSpacer(str: string): string {
     cursor: pointer;
 }
 
+.button:hover { 
+    outline: 1px solid #2d3b87;
+}
+
 .button--wide {
     padding: 0 36px;
 }

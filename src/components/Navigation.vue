@@ -113,6 +113,11 @@ import { router } from "@/router/router";
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin: 1px;
+}
+
+.nav__item:hover {
+    outline: 1px solid #2d3b87;
 }
 
 .nav__item--active {
