@@ -1,27 +1,28 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { stateNames } from "@/data/stateNames";
 import { generalStore } from "@/store/store";
 const store = generalStore();
 
-
+// SETUP
+const isJustAdded = ref<boolean>(false);
 
 // PROPS
 interface CardProps {
     data: {
-        id: string,
-        state: string,
-        pic: string,
-        title: string,
-        location: string,
-        seller: string,
-        type: string,
-        description: string,
-        amount: string,
-        price: string,
-    },
-    dealID?: number,
-    mode: string
+        id: string;
+        state: string;
+        pic: string;
+        title: string;
+        location: string;
+        seller: string;
+        type: string;
+        description: string;
+        amount: string;
+        price: string;
+    };
+    dealID?: number;
+    mode: string;
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -65,6 +66,16 @@ function priceSpacer(str: string): string {
     }
     return `${priceSpacer(str.slice(0, -3))} ${str.slice(-3)}`;
 }
+
+function addDeal(id: number): void {
+    if (isJustAdded.value) return;
+    isJustAdded.value = true;
+    store.addDeal(id);
+    setTimeout(() => {
+        isJustAdded.value = false;
+    }, 500)
+}
+
 </script>
 
 <template>
@@ -131,11 +142,13 @@ function priceSpacer(str: string): string {
             </div>
             <div class="card__control">
                 <button
-                    class="card__add-deals text button button--wide button--click"
-                    @click="store.addDeal(parseInt(props.data.id))"
+                    class="card__add-deals text button button--wide"
+                    :class="{ 'button--click button--hover': !isJustAdded }"
+                    @click="addDeal(parseInt(props.data.id))"
                     v-if="props.mode === 'default'"
                 >
-                    Добавить в сделки
+                    <span v-if="isJustAdded" class="button__text--faded"> Добавлено! </span>
+                    <span v-else> Добавить в сделки </span>
                 </button>
                 <button
                     class="card__add-deals text button button--wide button--green"
@@ -148,7 +161,7 @@ function priceSpacer(str: string): string {
                 </button>
                 <button
                     class="card__add-fav text button"
-                    :class="{ 'button--active': favButton }"
+                    :class="{ 'button--active': favButton, 'button--hover': !favButton }"
                     @click="store.toggleFavourite(parseInt(props.data.id))"
                 >
                     <img
@@ -327,7 +340,7 @@ function priceSpacer(str: string): string {
     cursor: pointer;
 }
 
-.button:hover { 
+.button--hover:hover {
     outline: 1px solid #2d3b87;
 }
 
@@ -354,6 +367,10 @@ function priceSpacer(str: string): string {
 .button--click:active {
     color: white;
     background: #2942a8;
+}
+
+.button__text--faded {
+    color: #969dc3;
 }
 
 @media screen and (max-width: 1000px) {
